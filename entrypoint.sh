@@ -12,4 +12,10 @@ echo "root:$root_pw" | chpasswd
 
 /usr/sbin/sshd "$@"
 
-sleep INF
+for sig in TERM INT QUIT HUP; do
+  trap "pkill sshd; exit" $sig
+done
+
+while : ; do
+  sleep 1
+done
